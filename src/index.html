@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <!-- <input type="text" id="target" /> -->
+      <!-- <span>username</span> -->
+      <!-- <button onclick="registerUser()">Loaduser</button> -->
+    </div>
+    <div>
+      <input type="text" id="chat" />
+      <button id="button">Click</button>
+    </div>
+
+    <div>
+      <div>
+        <input id="to" type="text" />
+        <button>to</button>
+      </div>
+
+      <div>
+        <input id="from" type="text" />
+        <button>from</button>
+      </div>
+    </div>
+
+    <ul id="messages"></ul>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const chatContent = document.querySelector('#chat');
+      const button = document.querySelector('#button');
+
+      const to = document.querySelector('#to');
+      const from = document.querySelector('#from');
+
+      var socket = io();
+      socket.emit('join', { from: 'lucas@melo.com1' });
+
+      button.onclick = () => {
+        socket.emit('message', {
+          from: from.value,
+          to: to.value,
+          msg: chatContent.value,
+        });
+      };
+
+      socket.on('message', (data) => {
+        console.log(data);
+      });
+
+      // socket.on('chat message', (msg) => {
+      //   console.log(msg);
+      //   var item = document.createElement('li');
+      //   item.textContent = msg;
+      //   messages.appendChild(item);
+      //   window.scrollTo(0, document.body.scrollHeight);
+      // });
+    </script>
+  </body>
+</html>
